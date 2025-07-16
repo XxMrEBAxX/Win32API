@@ -4,7 +4,9 @@
 class CMissile : public CObject
 {
 private:
-	float		m_fDir;
+	float		m_fTheta;
+
+	Vec2		m_vDir;
 
 public:
 	CMissile();
@@ -13,12 +15,7 @@ public:
 	virtual void update();
 	virtual void render(HDC _dc);
 
-	void SetDir(bool _bUp)
-	{
-		if (_bUp)
-			m_fDir = -1.f;
-		else
-			m_fDir = 1.f;
-	}
+	void SetDir(float _fTheta) { m_fTheta = _fTheta; }
+	void SetDir(Vec2 _vDir) { m_vDir = _vDir; m_vDir.Normalize(); }
 };
 
