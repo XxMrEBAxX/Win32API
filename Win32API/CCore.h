@@ -10,6 +10,7 @@ public:
 	int Init(HWND hWnd, POINT ptResolution);
 	void progress();
 	HWND GetMainHwnd() { return m_hWnd; }
+	POINT GetResolution() { return m_ptResolution; }
 
 private:
 	HWND		m_hWnd;			// 메인 윈도우 핸들

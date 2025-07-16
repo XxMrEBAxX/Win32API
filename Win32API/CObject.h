@@ -12,6 +12,9 @@ public:
 	Vec2 GetPos() const { return m_vPos; }
 	Vec2 GetScale() const { return m_vScale; }
 
+	virtual void update();
+	virtual void render(HDC _dc);
+
 	CObject();
 	virtual ~CObject();
 };
