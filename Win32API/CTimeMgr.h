@@ -16,6 +16,7 @@ private:
 public:
 	void Init();
 	void update();
+	void render();
 
 	double GetDT() const { return m_dDT; };
 	float GetfDT() const { return static_cast<float>(m_dDT); }

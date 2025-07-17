@@ -6,6 +6,8 @@ private:
 	HBITMAP m_hBit; // 리소스에 대한 비트맵
 
 public:
+	void Load(const wstring& _strFilePath);
+
 	CTexture();
 	~CTexture();
 };
