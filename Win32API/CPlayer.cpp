@@ -2,9 +2,11 @@
 #include "CPlayer.h"
 #include "CMissile.h"
 #include "CScene.h"
+#include "CTexture.h"
 
 #include "CSceneMgr.h"
 
+#include "CPathMgr.h"
 #include "CTimeMgr.h"
 #include "CKeyMgr.h"
 
@@ -36,6 +38,30 @@ void CPlayer::update()
 	SetPos(vPos);
 }
 
+void CPlayer::render(HDC _dc)
+{
+	int iWidth = (int)m_pTex->Width();
+	int iHeight = (int)m_pTex->Height();
+
+	Vec2 vPos = GetPos();
+
+	//BitBlt(_dc
+	//		, int(vPos.x - (float)(iWidth / 2))
+	//		, int (vPos.y - (float)(iHeight / 2))
+	//		, iWidth, iHeight
+	//		, m_pTex->GetDC()
+	//		, 0, 0, SRCCOPY);
+
+	TransparentBlt(_dc
+		, int(vPos.x - (float)(iWidth / 2))
+		, int(vPos.y - (float)(iHeight / 2))
+		, iWidth, iHeight
+		, m_pTex->GetDC()
+		, 0, 0
+		, iWidth, iHeight
+		, RGB(255, 0, 255)); // Magenta color for transparency
+}
+
 void CPlayer::CreateMissile()
 {
 	Vec2 vMissilePos = GetPos();
@@ -44,8 +70,26 @@ void CPlayer::CreateMissile()
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(vMissilePos);
 	pMissile->SetScale(Vec2(25.f, 25.f));
-	pMissile->SetDir(Vec2(0, -1));
+	pMissile->SetDir(Vec2(0.f, -1.f));
 
 	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
 	pCurScene->AddObject(pMissile, GROUP_TYPE::DEFAULT);
+}
+
+CPlayer::CPlayer() : m_pTex(nullptr)
+{
+	m_pTex = new CTexture;
+
+	wstring strFilepath = CPathMgr::GetInst()->GetContentPath();
+	strFilepath += L"texture\\Player_Ship2c.bmp";
+	m_pTex->Load(strFilepath);
+}
+
+CPlayer::~CPlayer()
+{
+	if (m_pTex)
+	{
+		delete m_pTex;
+		m_pTex = nullptr;
+	}
 }
